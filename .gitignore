@@ -54,7 +54,6 @@ cover/
 # Translations
 *.mo
 *.pot
-
 # Django stuff:
 *.log
 local_settings.py
@@ -156,6 +155,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Google OAuth Credentials & Tokens
+credentials.json
+token.json
+client_secret*.json
 
 # Spyder project settings
 .spyderproject
