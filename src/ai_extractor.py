@@ -3,7 +3,9 @@ import json
 import time
 from google import genai
 from google.genai import types
+from google.genai import errors
 from dotenv import load_dotenv
+
 load_dotenv()
 client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
 
@@ -26,7 +28,7 @@ def _parse_response(text):
     parsed = json.loads(text)
     return parsed
 
-def extract_data_from_receipt(image_bytes, max_retries=3):
+def extract_data_from_receipt(image_bytes, max_retries = 3):
     for attempt in range(1, max_retries + 1):
         try:
             response = client.models.generate_content(
@@ -39,17 +41,9 @@ def extract_data_from_receipt(image_bytes, max_retries=3):
                     EXTRACTION_PROMPT
                 ]
             )
-            return _parse_response(response.text)
-        except Exception as e:
+            data = _parse_response(response.text)
+            return data
+        except errors.ServerError as e:
             if attempt == max_retries:
                 raise e
-            time.sleep(1)
-
-
-with open("teste.jpeg", "rb") as f:
-    bytes_de_teste = f.read()
-
-resultado = extract_data_from_receipt(bytes_de_teste)
-print(resultado)
-print(type(resultado))
-print(resultado["name"])
+            time.sleep(2 ** attempt)
