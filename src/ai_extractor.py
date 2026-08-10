@@ -4,9 +4,7 @@ import time
 from google import genai
 from google.genai import types
 from google.genai import errors
-from dotenv import load_dotenv
 
-load_dotenv()
 client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
 
 EXTRACTION_PROMPT = """You are a financial receipt data extraction system. Analyze the provided image of a Brazilian Pix payment receipt and extract exactly the following four fields.
