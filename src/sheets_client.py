@@ -27,4 +27,4 @@ def save_transaction(data):
         data.get("amount", "Not identified"), 
         data.get("receiver", "Not identified"),
     ]
-    sheet.append_row(row)
+    sheet.append_row(row, value_input_option="USER_ENTERED")
